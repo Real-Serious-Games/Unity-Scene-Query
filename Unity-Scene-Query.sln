@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SceneQuery", "SceneQuery\SceneQuery.csproj", "{9F9AA245-403E-4FD9-BC1F-3EB8F576E90A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SceneQuery.Tests", "SceneQuery.Tests\SceneQuery.Tests.csproj", "{79A47BD6-7D8B-4BFA-B3C4-63189F550BB4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+		Testing|Any CPU = Testing|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9F9AA245-403E-4FD9-BC1F-3EB8F576E90A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F9AA245-403E-4FD9-BC1F-3EB8F576E90A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F9AA245-403E-4FD9-BC1F-3EB8F576E90A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F9AA245-403E-4FD9-BC1F-3EB8F576E90A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F9AA245-403E-4FD9-BC1F-3EB8F576E90A}.Testing|Any CPU.ActiveCfg = Testing|Any CPU
+		{9F9AA245-403E-4FD9-BC1F-3EB8F576E90A}.Testing|Any CPU.Build.0 = Testing|Any CPU
+		{79A47BD6-7D8B-4BFA-B3C4-63189F550BB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79A47BD6-7D8B-4BFA-B3C4-63189F550BB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79A47BD6-7D8B-4BFA-B3C4-63189F550BB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79A47BD6-7D8B-4BFA-B3C4-63189F550BB4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79A47BD6-7D8B-4BFA-B3C4-63189F550BB4}.Testing|Any CPU.ActiveCfg = Testing|Any CPU
+		{79A47BD6-7D8B-4BFA-B3C4-63189F550BB4}.Testing|Any CPU.Build.0 = Testing|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
