@@ -5,7 +5,7 @@ using RSG.Scene.Query;
 
 public class Example : MonoBehaviour 
 {
-	void Start () 
+    void Start () 
     {
         var sceneQuery = new SceneQuery();
 
@@ -19,37 +19,37 @@ public class Example : MonoBehaviour
         // Find all objects named cube
         //
         var cubes = sceneQuery.SelectAll("cUbE"); // Note case-insensitivity.
-		Debug.Log("Found cubes: " + string.Join(", ", cubes.Select(c => c.name).ToArray()));
+        Debug.Log("Found cubes: " + string.Join(", ", cubes.Select(c => c.name).ToArray()));
 
         // 
         // Find all objects that start with 'sphere'.
         //
         var spheres = sceneQuery.SelectAll("?sphere");
-		Debug.Log("Found spheres: " + string.Join(", ", spheres.Select(s => s.name).ToArray()));
+        Debug.Log("Found spheres: " + string.Join(", ", spheres.Select(s => s.name).ToArray()));
 
-		// 
-		// Find all objects on a particular layer.
-		//
-		var gameObjectsOnLayer = sceneQuery.SelectAll(".MyTestLayer");
-		Debug.Log("Found game objects by layer: " + string.Join(", ", gameObjectsOnLayer.Select(go => go.name).ToArray()));
+        // 
+        // Find all objects on a particular layer.
+        //
+        var gameObjectsOnLayer = sceneQuery.SelectAll(".MyTestLayer");
+        Debug.Log("Found game objects by layer: " + string.Join(", ", gameObjectsOnLayer.Select(go => go.name).ToArray()));
 
-		// 
-		// Find all objects that are tagged.
-		//
-		var taggedGameObjects = sceneQuery.SelectAll(".MyTestTag");
-		Debug.Log("Found game objects by tag: " + string.Join(", ", taggedGameObjects.Select(go => go.name).ToArray()));
+        // 
+        // Find all objects that are tagged.
+        //
+        var taggedGameObjects = sceneQuery.SelectAll(".MyTestTag");
+        Debug.Log("Found game objects by tag: " + string.Join(", ", taggedGameObjects.Select(go => go.name).ToArray()));
 
-		// 
-		// Find exact object in hierarcy.
-		//
-		var exactGameObject = sceneQuery.SelectOne("/Parent/Sphere3/Cube");
-		Debug.Log("Found exact game object: " + exactGameObject.name);
-		
-		// 
-		// Find a game object some where under a particular parent.
-		//
+        // 
+        // Find exact object in hierarcy.
+        //
+        var exactGameObject = sceneQuery.SelectOne("/Parent/Sphere3/Cube");
+        Debug.Log("Found exact game object: " + exactGameObject.name);
+        
+        // 
+        // Find a game object some where under a particular parent.
+        //
         var gameObjectSomewhereUnderParent = sceneQuery.SelectOne("Parent Cube");
-		Debug.Log("Found game object some where under parent: " + gameObjectSomewhereUnderParent.name);
+        Debug.Log("Found game object some where under parent: " + gameObjectSomewhereUnderParent.name);
 
         // 
         // Find all game objects directly under a particular parent.
@@ -75,5 +75,5 @@ public class Example : MonoBehaviour
         var gameObjectWithSpacesInName = sceneQuery.SelectOne("\"Something with a space in the name\"");
         Debug.Log("Used quotes to find a game object with spaces in a name: " + gameObjectWithSpacesInName.name);
     }
-	
+    
 }
