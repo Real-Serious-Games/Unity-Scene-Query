@@ -15,40 +15,24 @@ namespace RSG.Scene.Query
         /// <summary>
         /// Select the first game object that matches the specified selector.
         /// This is very similar to CSS/JQuery selection.
-        /// 
-        ///     #<regex>    -> Retreive objects that match the regex.
-        ///     .<regex>    -> Retrieve objects whose layer, tag or category matches the regex.
-        ///     
         /// </summary>
         GameObject SelectOne(string selector);
 
         /// <summary>
         /// Select object in the scene based on the specified selector.
         /// This is very similar to CSS/JQuery selection.
-        /// 
-        ///     #<regex>    -> Retreive objects that match the regex.
-        ///     .<regex>    -> Retrieve objects whose layer, tag or category matches the regex.
-        ///     
         /// </summary>
         IEnumerable<GameObject> SelectAll(string selector);
 
         /// <summary>
         /// Select the first child game object that matches the specified selector.
         /// This is very similar to CSS/JQuery selection.
-        /// 
-        ///     #<regex>    -> Retreive objects that match the regex.
-        ///     .<regex>    -> Retrieve objects whose layer, tag or category matches the regex.
-        ///     
         /// </summary>
         GameObject SelectOne(GameObject gameObject, string selector);
 
         /// <summary>
         /// Select child objects in the scene based on the specified selector.
         /// This is very similar to CSS/JQuery selection.
-        /// 
-        ///     #<regex>    -> Retreive objects that match the regex.
-        ///     .<regex>    -> Retrieve objects whose layer, tag or category matches the regex.
-        ///     
         /// </summary>
         IEnumerable<GameObject> SelectAll(GameObject gameObject, string selector);
     }
@@ -61,6 +45,18 @@ namespace RSG.Scene.Query
         private ISceneTraversal sceneTraversal;
         private IQueryParser queryParser;
 
+        /// <summary>
+        /// Constructor for normal use.
+        /// </summary>
+        public SceneQuery()
+        {
+            this.sceneTraversal = new SceneTraversal();
+            this.queryParser = new QueryParser(new QueryTokenizer());
+        }
+
+        /// <summary>
+        /// Constructor for testing, allows dependencies to be injected.
+        /// </summary>
         public SceneQuery(ISceneTraversal sceneTraversal, IQueryParser queryParser)
         {
             Argument.NotNull(() => sceneTraversal);
@@ -72,10 +68,6 @@ namespace RSG.Scene.Query
         /// <summary>
         /// Select the first game object that matches the specified selector.
         /// This is very similar to CSS/JQuery selection.
-        /// 
-        ///     #<regex>    -> Retreive objects that match the regex.
-        ///     .<regex>    -> Retrieve objects whose layer, tag or category matches the regex.
-        ///     
         /// </summary>
         public GameObject SelectOne(string selector)
         {
@@ -87,10 +79,6 @@ namespace RSG.Scene.Query
         /// <summary>
         /// Select object in the scene based on the specified selector.
         /// This is very similar to CSS/JQuery selection.
-        /// 
-        ///     #<uid>      -> Retreive the object that matches the unique id.
-        ///     .<regex>    -> Retrieve objects whose layer, tag or category matches the regex.
-        ///     
         /// </summary>
         public IEnumerable<GameObject> SelectAll(string selector)
         {
@@ -112,10 +100,6 @@ namespace RSG.Scene.Query
         /// <summary>
         /// Select the first child game object that matches the specified selector.
         /// This is very similar to CSS/JQuery selection.
-        /// 
-        ///     #<regex>    -> Retreive objects that match the regex.
-        ///     .<regex>    -> Retrieve objects whose layer, tag or category matches the regex.
-        ///     
         /// </summary>
         public GameObject SelectOne(GameObject gameObject, string selector)
         {
@@ -128,10 +112,6 @@ namespace RSG.Scene.Query
         /// <summary>
         /// Select child objects in the scene based on the specified selector.
         /// This is very similar to CSS/JQuery selection.
-        /// 
-        ///     #<regex>    -> Retreive objects that match the regex.
-        ///     .<regex>    -> Retrieve objects whose layer, tag or category matches the regex.
-        ///     
         /// </summary>
         public IEnumerable<GameObject> SelectAll(GameObject gameObject, string selector)
         {
