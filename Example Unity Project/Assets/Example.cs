@@ -7,7 +7,20 @@ public class Example : MonoBehaviour
 {
     void Start () 
     {
-        var sceneQuery = new SceneQuery();
+		var sceneTraversal = new SceneTraversal();
+		var sceneQuery = new SceneQuery();
+
+		//
+		// Traverse root objects.
+		//
+		var rootObjects = sceneTraversal.RootNodes();
+		Debug.Log("Root game objects: " + string.Join(", ", rootObjects.Select (go => go.name).ToArray()));
+
+		//
+		// Traverse all scene objects.
+		//
+		var allObjects = sceneTraversal.PreOrderHierarchy();
+		Debug.Log("All game objects: " + string.Join(", ", allObjects.Select (go => go.name).ToArray()));
 
         //
         // Find first object in scene named Cube.
@@ -50,6 +63,24 @@ public class Example : MonoBehaviour
         //
         var gameObjectSomewhereUnderParent = sceneQuery.SelectOne("Parent Cube");
         Debug.Log("Found game object some where under parent: " + gameObjectSomewhereUnderParent.name);
+
+		//
+		// Traverse child game objects under a particular parent.
+		//
+		var childObjects = sceneTraversal.Children(sceneQuery.SelectOne("Parent"));
+		Debug.Log("Children: " + string.Join(", ", childObjects.Select(go => go.name).ToArray()));
+
+		//
+		// Traverse all descendents under a particular parent.
+		//
+		var descendentObjects = sceneTraversal.Descendents(sceneQuery.SelectOne("Parent"));
+		Debug.Log("Decendents: " + string.Join(", ", descendentObjects.Select(go => go.name).ToArray()));
+
+		//
+		// Traverse all ancestor in the hierarchy above a particular game object.
+		//
+		var ancestorsObjects = sceneTraversal.Ancestors(sceneQuery.SelectOne("Parent/Sphere3/Cube"));
+		Debug.Log("Ancestors: " + string.Join(", ", ancestorsObjects.Select(go => go.name).ToArray()));
 
         // 
         // Find all game objects directly under a particular parent.
