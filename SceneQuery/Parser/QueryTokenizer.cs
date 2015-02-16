@@ -85,6 +85,8 @@ namespace RSG.Scene.Query.Parser
             Argument.StringNotNullOrEmpty(() => query);
 
             this.query = query.Trim();
+            this.position = 0;
+
             if (this.query == string.Empty)
             {
                 throw new ArgumentException("Query contains only whitespace.");
