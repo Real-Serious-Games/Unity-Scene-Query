@@ -84,7 +84,7 @@ The question mark is much more powerful than just partial name matching. It can 
 
 	?^pickup.*truck$
 
-A leading slash can be used to match objects that are at the root of the [hierarchy](http://docs.unity3d.com/Manual/Hierarchy.html), for example to query for a game object *pickup-truck* that is a root object: 
+A leading slash matches objects that are at the root of the [hierarchy](http://docs.unity3d.com/Manual/Hierarchy.html), for example to query for a game object *pickup-truck* that is a root object: 
 
 	/pickup-truck
 
@@ -92,7 +92,7 @@ Slashes can also be used, like a file-system path, to specify a path through the
 
 	/vehicles/active/pickup-truck
 
-Slashes can be replaced with spaces to find particular game object(s) that are nested *somewhere* under another game objects, for example to find game objects named *pickup-truck* anywhere in the hierarchy under objects called *vehicles*:
+The greater-than symbol can be used in place of slashes to find particular game object(s) that are nested *somewhere* under another game objects, for example to find game objects named *pickup-truck* anywhere in the hierarchy under objects called *vehicles*:
 
 	vehicles>pickup-truck
 
