@@ -61,7 +61,7 @@ public class Example : MonoBehaviour
         // 
         // Find a game object some where under a particular parent.
         //
-        var gameObjectSomewhereUnderParent = sceneQuery.SelectOne("Parent Cube");
+        var gameObjectSomewhereUnderParent = sceneQuery.SelectOne("Parent>Cube");
         Debug.Log("Found game object some where under parent: " + gameObjectSomewhereUnderParent.name);
 
 		//
@@ -91,10 +91,10 @@ public class Example : MonoBehaviour
         // 
         // Find all nested game objects somewhere under a particular parent.
         //
-        var gameObjectsNestedUnderParent = sceneQuery.SelectAll("Parent Cube");
+        var gameObjectsNestedUnderParent = sceneQuery.SelectAll("Parent > Cube");
         Debug.Log("All game objects nested somewhere under a particular parent: " + string.Join(", ", gameObjectsNestedUnderParent.Select(go => go.name).ToArray()));
 
-        // 
+		// 
         // Find all objects by name and layer.
         //
         var gameObjectsByNameAndLayer = sceneQuery.SelectAll("Cube.MyTestLayer");

@@ -394,7 +394,7 @@ namespace RSG.Scene.Query.Parser.Tests
                 },
                 new MockToken
                 {
-                    Token = QueryTokens.Separator,
+                    Token = QueryTokens.GreaterThan,
                     TokenString = string.Empty,
                 },
                 new MockToken

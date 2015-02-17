@@ -17,7 +17,7 @@ namespace RSG.Scene.Query.Parser
         Dot,
         UniqueID,
         QuotedString,
-        Separator,
+        GreaterThan,
         Slash,
         Colon,
         SemiColon
@@ -106,19 +106,20 @@ namespace RSG.Scene.Query.Parser
                 return;
             }
 
-            if (IsWhitespace(query[position]))
-            {
-                Token = QueryTokens.Separator;
-                TokenString = string.Empty;
-
-                SkipwhiteSpace();
-                return;
-            }
+            SkipwhiteSpace();
 
             if (query[position] == '?')
             {
                 Token = QueryTokens.QuestionMark;
                 TokenString = "?";
+                ++position;
+                return;
+            }
+
+            if (query[position] == '>')
+            {
+                Token = QueryTokens.GreaterThan;
+                TokenString = ">";
                 ++position;
                 return;
             }

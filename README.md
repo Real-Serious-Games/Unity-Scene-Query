@@ -94,7 +94,7 @@ Slashes can also be used, like a file-system path, to specify a path through the
 
 Slashes can be replaced with spaces to find particular game object(s) that are nested *somewhere* under another game objects, for example to find game objects named *pickup-truck* anywhere in the hierarchy under objects called *vehicles*:
 
-	vehicles pickup-truck
+	vehicles>pickup-truck
 
 Game object(s) can be by Unity [layer](http://docs.unity3d.com/Manual/Layers.html) or [tag](http://docs.unity3d.com/Manual/Tags.html) by placing a fullstop before the layer/tag name:
 
@@ -152,7 +152,7 @@ The grammar for the query language specified in [EBNF(-ish)](http://en.wikipedia
 	   ;
 	
 	 descendents_selector
-	   = ['/'] compound_selector { ('/' | white-space) compound_selector }
+	   = ['/'] compound_selector { ('/' | '>') compound_selector }
 	   ;
 	
 	 compound_selector

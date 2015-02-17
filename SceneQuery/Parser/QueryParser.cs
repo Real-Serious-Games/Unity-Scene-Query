@@ -169,7 +169,7 @@ namespace RSG.Scene.Query.Parser
         /// </summary>
         private bool IsSeparator(QueryTokens queryToken)
         {
-            return queryToken == QueryTokens.Separator ||
+            return queryToken == QueryTokens.GreaterThan ||
                    queryToken == QueryTokens.Slash;
         }
 
@@ -204,7 +204,7 @@ namespace RSG.Scene.Query.Parser
                 {
                     query = new ParentQuery(query);
                 }
-                else if (tokenizer.Token == QueryTokens.Separator)
+                else if (tokenizer.Token == QueryTokens.GreaterThan)
                 {
                     query = new AncestorQuery(query);
                 }

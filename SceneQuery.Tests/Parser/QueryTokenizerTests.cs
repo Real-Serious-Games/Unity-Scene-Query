@@ -57,13 +57,12 @@ namespace RSG.Scene.Query.Parser.Tests
         }
 
         [Fact]
-        public void advanced_to_end_with_two_tokens_and_separator()
+        public void advanced_to_end_with_two_tokens()
         {
             var testObject = new QueryTokenizer();
 
             testObject.Start("blah blah");
 
-            testObject.Advance();
             testObject.Advance();
             testObject.Advance();
 
@@ -79,7 +78,6 @@ namespace RSG.Scene.Query.Parser.Tests
 
             testObject.Start("blah blah");
 
-            testObject.Advance();
             testObject.Advance();
             testObject.Advance();
 
@@ -195,7 +193,7 @@ namespace RSG.Scene.Query.Parser.Tests
         }
 
         [Fact]
-        public void tokenizer_recognizes_two_names_with_a_separator()
+        public void tokenizer_recognizes_two_names_separated_by_whitespace()
         {
             var testObject = new QueryTokenizer();
 
@@ -205,34 +203,6 @@ namespace RSG.Scene.Query.Parser.Tests
 
             Assert.True(testObject.Token == QueryTokens.Name);
             Assert.True(testObject.TokenString == name1);
-
-            testObject.Advance();
-
-            Assert.True(testObject.Token == QueryTokens.Separator);
-            Assert.True(testObject.TokenString == string.Empty);
-
-            testObject.Advance();
-
-            Assert.True(testObject.Token == QueryTokens.Name);
-            Assert.True(testObject.TokenString == name2);
-        }
-
-        [Fact]
-        public void tokenizer_recognizes_two_names_and_handles_multiple_whitespace()
-        {
-            var testObject = new QueryTokenizer();
-
-            var name1 = "name1";
-            var name2 = "name2";
-            testObject.Start(name1 + "               " + name2);
-
-            Assert.True(testObject.Token == QueryTokens.Name);
-            Assert.True(testObject.TokenString == name1);
-
-            testObject.Advance();
-
-            Assert.True(testObject.Token == QueryTokens.Separator);
-            Assert.True(testObject.TokenString == string.Empty);
 
             testObject.Advance();
 
@@ -255,18 +225,8 @@ namespace RSG.Scene.Query.Parser.Tests
 
             testObject.Advance();
 
-            Assert.True(testObject.Token == QueryTokens.Separator);
-            Assert.True(testObject.TokenString == string.Empty);
-
-            testObject.Advance();
-
             Assert.True(testObject.Token == QueryTokens.Name);
             Assert.True(testObject.TokenString == name2);
-
-            testObject.Advance();
-
-            Assert.True(testObject.Token == QueryTokens.Separator);
-            Assert.True(testObject.TokenString == string.Empty);
 
             testObject.Advance();
 
@@ -287,8 +247,6 @@ namespace RSG.Scene.Query.Parser.Tests
             var testObject = new QueryTokenizer();
 
             testObject.Start("name #");
-
-            testObject.Advance(); // Chew separator.
 
             Assert.Throws<ApplicationException>(() => testObject.Advance());
 
@@ -320,11 +278,6 @@ namespace RSG.Scene.Query.Parser.Tests
 
             Assert.True(testObject.Token == QueryTokens.UniqueID);
             Assert.True(testObject.TokenString == name1);
-
-            testObject.Advance();
-
-            Assert.True(testObject.Token == QueryTokens.Separator);
-            Assert.True(testObject.TokenString == string.Empty);
 
             testObject.Advance();
 
@@ -364,11 +317,6 @@ namespace RSG.Scene.Query.Parser.Tests
 
             testObject.Advance();
 
-            Assert.True(testObject.Token == QueryTokens.Separator);
-            Assert.True(testObject.TokenString == string.Empty);
-
-            testObject.Advance();
-
             Assert.True(testObject.Token == QueryTokens.UniqueID);
             Assert.True(testObject.TokenString == name2);
         }
@@ -402,11 +350,6 @@ namespace RSG.Scene.Query.Parser.Tests
 
             Assert.True(testObject.Token == QueryTokens.UniqueID);
             Assert.True(testObject.TokenString == name1);
-
-            testObject.Advance();
-
-            Assert.True(testObject.Token == QueryTokens.Separator);
-            Assert.True(testObject.TokenString == string.Empty);
 
             testObject.Advance();
 
@@ -444,11 +387,6 @@ namespace RSG.Scene.Query.Parser.Tests
 
             testObject.Advance();
 
-            Assert.True(testObject.Token == QueryTokens.Separator);
-            Assert.True(testObject.TokenString == string.Empty);
-
-            testObject.Advance();
-
             Assert.True(testObject.Token == QueryTokens.Name);
             Assert.True(testObject.TokenString == name);
         }
@@ -477,6 +415,23 @@ namespace RSG.Scene.Query.Parser.Tests
         }
 
         [Fact]
+        public void tokenizer_recognizes_greater_than()
+        {
+            var testObject = new QueryTokenizer();
+
+            var name = "name";
+            testObject.Start(">" + name);
+
+            Assert.True(testObject.Token == QueryTokens.GreaterThan);
+            Assert.True(testObject.TokenString == ">");
+
+            testObject.Advance();
+
+            Assert.True(testObject.Token == QueryTokens.Name);
+            Assert.True(testObject.TokenString == name);
+        }
+
+        [Fact]
         public void tokenizer_recognizes_exclamation_mark()
         {
             var testObject = new QueryTokenizer();
@@ -494,7 +449,7 @@ namespace RSG.Scene.Query.Parser.Tests
         }
 
         [Fact]
-        public void tokenizer_recognizes_exclamation_mark_and_name_with_separator()
+        public void tokenizer_recognizes_exclamation_mark_and_name_with_whitespace_in_between()
         {
             var testObject = new QueryTokenizer();
 
@@ -503,11 +458,6 @@ namespace RSG.Scene.Query.Parser.Tests
 
             Assert.True(testObject.Token == QueryTokens.ExclamationMark);
             Assert.True(testObject.TokenString == "!");
-
-            testObject.Advance();
-
-            Assert.True(testObject.Token == QueryTokens.Separator);
-            Assert.True(testObject.TokenString == string.Empty);
 
             testObject.Advance();
 
@@ -556,7 +506,7 @@ namespace RSG.Scene.Query.Parser.Tests
         }
 
         [Fact]
-        public void tokenizer_recognizes_dot_and_name_with_separator()
+        public void tokenizer_recognizes_dot_and_name_separated_by_whitespace()
         {
             var testObject = new QueryTokenizer();
 
@@ -566,11 +516,6 @@ namespace RSG.Scene.Query.Parser.Tests
             Assert.True(testObject.Token == QueryTokens.Dot);
             Assert.True(testObject.TokenString == ".");
 
-            testObject.Advance();
-
-            Assert.True(testObject.Token == QueryTokens.Separator);
-            Assert.True(testObject.TokenString == string.Empty);
-            
             testObject.Advance();
 
             Assert.True(testObject.Token == QueryTokens.Name);
@@ -618,7 +563,7 @@ namespace RSG.Scene.Query.Parser.Tests
         }
 
         [Fact]
-        public void tokenizer_recognizes_colon_and_name_with_separator()
+        public void tokenizer_recognizes_colon_and_name_separated_by_whitespace()
         {
             var testObject = new QueryTokenizer();
 
@@ -627,11 +572,6 @@ namespace RSG.Scene.Query.Parser.Tests
 
             Assert.True(testObject.Token == QueryTokens.Colon);
             Assert.True(testObject.TokenString == ":");
-
-            testObject.Advance();
-
-            Assert.True(testObject.Token == QueryTokens.Separator);
-            Assert.True(testObject.TokenString == string.Empty);
 
             testObject.Advance();
 
