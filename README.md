@@ -92,7 +92,7 @@ Slashes can also be used, like a file-system path, to specify a path through the
 
 	/vehicles/active/pickup-truck
 
-The greater-than symbol can be used in place of slashes to find particular game object(s) that are nested *somewhere* under another game objects, for example to find game objects named *pickup-truck* anywhere in the hierarchy under objects called *vehicles*:
+The greater-than symbol can be used in place of slashes to find particular game object(s) that are nested *somewhere* under other game objects, for example to find game objects named *pickup-truck* anywhere in the hierarchy under objects called *vehicles*:
 
 	vehicles>pickup-truck
 
