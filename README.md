@@ -96,7 +96,7 @@ The greater-than symbol can be used in place of slashes to find particular game 
 
 	vehicles>pickup-truck
 
-Game object(s) can be by Unity [layer](http://docs.unity3d.com/Manual/Layers.html) or [tag](http://docs.unity3d.com/Manual/Tags.html) by placing a fullstop before the layer/tag name:
+We can query for game object(s) by Unity [layer](http://docs.unity3d.com/Manual/Layers.html) or [tag](http://docs.unity3d.com/Manual/Tags.html) by placing a fullstop before the layer/tag name:
 
 	.vehicle
 
