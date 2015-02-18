@@ -74,7 +74,7 @@ Game object(s) can be queried by name simply by specifying the name, for example
 
 	pickup-truck
 
-Note that the queries are case-insensitive. 
+Note that the queries are case-insensitive.
 
 A question mark activates the regular expression matching. You can use this to for partial name matching, for example to query for all objects that contain *truck*:
 
@@ -116,6 +116,13 @@ A hash character can be used to query for a single object by unique-id, this cou
 
 	#543253
 
+Note that only a single name, partial name or id can be used in any compound selector. The following is illegal:
+
+	pickup-truck sports-coupe
+
+However name/id can be combined with tags and layers as previously illustrated.
+
+Multiple names can be used with the slash or greater-than operators so these will denote a parent-child relation between different objects.
 
 ## Query for Single Game Object
 
@@ -184,3 +191,9 @@ The grammar for the query language specified in [EBNF(-ish)](http://en.wikipedia
 	   = '#' character_sequence
 	   ;
 	
+
+
+## Road map
+
+* Operators for AND and OR.
+* Possibly need parenthesis to resolve precedence.

@@ -95,7 +95,7 @@ namespace RSG.Scene.Query.Parser
         /// <summary>
         /// Parse a selector.
         /// </summary>
-        public IQuery selector()
+        public IQuery selector(ref bool nameSelectorAllowed)
         {
             if (tokenizer.Token == QueryTokens.Dot)
             {
@@ -112,6 +112,21 @@ namespace RSG.Scene.Query.Parser
                 }
             }
 
+            if (tokenizer.Token == QueryTokens.ExclamationMark)
+            {
+                tokenizer.Advance();
+
+                return new NotQuery(selector(ref nameSelectorAllowed));
+            }
+
+            if (!nameSelectorAllowed)
+            {
+                throw new ApplicationException("Can't specify multiple names or ids in a single compound selector");
+            }
+
+            // Disallow other names in the same compound selector.
+            nameSelectorAllowed = false;
+
             if (tokenizer.Token == QueryTokens.UniqueID)
             {
                 var uniqueId = tokenizer.TokenString;
@@ -119,14 +134,6 @@ namespace RSG.Scene.Query.Parser
                 tokenizer.Advance();
 
                 return new UniqueIdQuery(Int32.Parse(uniqueId));
-            }
-
-            if (tokenizer.Token == QueryTokens.ExclamationMark)
-            {
-                tokenizer.Advance();
-
-                var childFilter = selector();
-                return new NotQuery(childFilter);
             }
 
             var nameMatcher = matcher();
@@ -145,9 +152,10 @@ namespace RSG.Scene.Query.Parser
         /// </summary>
         public IQuery compound_selector()
         {
-            var query = selector();
+            var nameSelectorAllowed = true;
+            var query = selector(ref nameSelectorAllowed);
 
-            if (tokenizer.AtEnd || IsSeparator(tokenizer.Token))
+            if (tokenizer.AtEnd || IsDescendentsSeparator(tokenizer.Token))
             {
                 // There is only a single selector, no need to create a compound selector.
                 return query;
@@ -155,11 +163,11 @@ namespace RSG.Scene.Query.Parser
 
             do
             {
-                var otherQuery = selector();
+                var otherQuery = selector(ref nameSelectorAllowed);
                 query = new AndQuery(otherQuery, query);
 
             } while (!tokenizer.AtEnd && 
-                     !IsSeparator(tokenizer.Token));
+                     !IsDescendentsSeparator(tokenizer.Token));
 
             return query;
         }
@@ -167,7 +175,7 @@ namespace RSG.Scene.Query.Parser
         /// <summary>
         /// Returns true if the token is a separator for stack filters.
         /// </summary>
-        private bool IsSeparator(QueryTokens queryToken)
+        private bool IsDescendentsSeparator(QueryTokens queryToken)
         {
             return queryToken == QueryTokens.GreaterThan ||
                    queryToken == QueryTokens.Slash;

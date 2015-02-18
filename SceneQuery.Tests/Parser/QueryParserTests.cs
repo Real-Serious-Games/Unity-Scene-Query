@@ -210,7 +210,8 @@ namespace RSG.Scene.Query.Parser.Tests
                 }
             );
 
-            var query = testObject.selector();
+            var nameSelectorAllowed = true;
+            var query = testObject.selector(ref nameSelectorAllowed);
             Assert.NotNull(query);
             Assert.IsType<NameQuery>(query);
             Assert.True(tokenizer.AtEnd);
@@ -234,7 +235,8 @@ namespace RSG.Scene.Query.Parser.Tests
                 }
             );
 
-            var query = testObject.selector();
+            var nameSelectorAllowed = true;
+            var query = testObject.selector(ref nameSelectorAllowed);
             Assert.NotNull(query);
             Assert.IsType<RegexNameQuery>(query);
             Assert.True(tokenizer.AtEnd);
@@ -253,7 +255,8 @@ namespace RSG.Scene.Query.Parser.Tests
                 }
             );
 
-            var query = testObject.selector();
+            var nameSelectorAllowed = true;
+            var query = testObject.selector(ref nameSelectorAllowed);
             Assert.NotNull(query);
             Assert.IsType<UniqueIdQuery>(query);
             Assert.True(tokenizer.AtEnd);
@@ -277,7 +280,8 @@ namespace RSG.Scene.Query.Parser.Tests
                 }
             );
 
-            var query = testObject.selector();
+            var nameSelectorAllowed = true;
+            var query = testObject.selector(ref nameSelectorAllowed);
             Assert.NotNull(query);
             Assert.IsType<NotQuery>(query);
             Assert.True(tokenizer.AtEnd);
@@ -301,7 +305,8 @@ namespace RSG.Scene.Query.Parser.Tests
                 }
             );
 
-            var query = testObject.selector();
+            var nameSelectorAllowed = true;
+            var query = testObject.selector(ref nameSelectorAllowed);
             Assert.NotNull(query);
             Assert.IsType<LayerQuery>(query);
             Assert.True(tokenizer.AtEnd);
@@ -330,33 +335,15 @@ namespace RSG.Scene.Query.Parser.Tests
                 }
             );
 
-            var query = testObject.selector();
+            var nameSelectorAllowed = true;
+            var query = testObject.selector(ref nameSelectorAllowed);
             Assert.NotNull(query);
             Assert.IsType<RegexLayerQuery>(query);
             Assert.True(tokenizer.AtEnd);
         }
 
         [Fact]
-        public void can_parse_query_with_single_selector()
-        {
-            var name = "SomeName";
-
-            Init(
-                new MockToken
-                {
-                    Token = QueryTokens.Name,
-                    TokenString = name,
-                }
-            );
-
-            var query = testObject.query();
-            Assert.NotNull(query);
-            Assert.IsType<NameQuery>(query);
-            Assert.True(tokenizer.AtEnd);
-        }
-
-        [Fact]
-        public void can_parse_compound_selector()
+        public void selector_with_two_names_is_illegal()
         {
             var name1 = "name1";
             var name2 = "name2";
@@ -374,10 +361,7 @@ namespace RSG.Scene.Query.Parser.Tests
                 }
             );
 
-            var query = testObject.query();
-            Assert.NotNull(query);
-            Assert.IsType<AndQuery>(query);
-            Assert.True(tokenizer.AtEnd);
+            Assert.Throws<ApplicationException>(() => testObject.query());
         }
 
         [Fact]
