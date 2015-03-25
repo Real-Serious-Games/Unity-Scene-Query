@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("SceneQuery")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("UnitySceneQuery")]
+[assembly: AssemblyDescription("A library to traverse and query the Unity scene to find particular objects, uses something similar to CSS selectors to identify game objects.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Real Serious Games")]
-[assembly: AssemblyProduct("SceneQuery")]
+[assembly: AssemblyProduct("UnitySceneQuery")]
 [assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
