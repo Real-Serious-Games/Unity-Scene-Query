@@ -1,5 +1,6 @@
 ﻿using Moq;
 using RSG.Scene.Query.Parser;
+using RSG.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -98,6 +99,44 @@ namespace RSG.Scene.Query.Tests
                 .Returns(testInput);
 
             Assert.Equal(mockGameObject1.Object, testObject.SelectOne(selector));
+        }
+
+        [Fact]
+        public void expect_one_throws_exception_on_no_matching_game_objects()
+        {
+            Init();
+
+            var selector = "some-selector";
+            var mockQuery = new Mock<IQuery>();
+            mockQueryParser
+                .Setup(m => m.Parse(selector))
+                .Returns(mockQuery.Object);
+
+            mockSceneTraversal
+                .Setup(m => m.PreOrderHierarchy())
+                .Returns(LinqExts.Empty<GameObject>());
+
+            Assert.Throws<ApplicationException>(() => testObject.ExpectOne(selector));
+        }
+
+        [Fact]
+        public void expect_one_throws_exception_on_no_matching_child_game_objects()
+        {
+            Init();
+
+            var mockParentGameObject = new Mock<GameObject>();
+
+            var selector = "some-selector";
+            var mockQuery = new Mock<IQuery>();
+            mockQueryParser
+                .Setup(m => m.Parse(selector))
+                .Returns(mockQuery.Object);
+
+            mockSceneTraversal
+                .Setup(m => m.PreOrderHierarchy(mockParentGameObject.Object))
+                .Returns(LinqExts.Empty<GameObject>());
+
+            Assert.Throws<ApplicationException>(() => testObject.ExpectOne(mockParentGameObject.Object, selector));
         }
     }
 }

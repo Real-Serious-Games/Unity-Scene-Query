@@ -20,6 +20,13 @@ namespace RSG.Scene.Query
         GameObject SelectOne(string selector);
 
         /// <summary>
+        /// Select the first game object that matches the specified selector.
+        /// This is very similar to CSS/JQuery selection.
+        /// Throws an exception if there is no game object that matches the selector.
+        /// </summary>
+        GameObject ExpectOne(string selector);
+
+        /// <summary>
         /// Select object in the scene based on the specified selector.
         /// This is very similar to CSS/JQuery selection.
         /// </summary>
@@ -30,6 +37,13 @@ namespace RSG.Scene.Query
         /// This is very similar to CSS/JQuery selection.
         /// </summary>
         GameObject SelectOne(GameObject gameObject, string selector);
+
+        /// <summary>
+        /// Select the first child game object that matches the specified selector.
+        /// This is very similar to CSS/JQuery selection.
+        /// Throws an exception if there is no game object that matches the selector.
+        /// </summary>
+        GameObject ExpectOne(GameObject gameObject, string selector);
 
         /// <summary>
         /// Select child objects in the scene based on the specified selector.
@@ -78,6 +92,24 @@ namespace RSG.Scene.Query
         }
 
         /// <summary>
+        /// Select the first game object that matches the specified selector.
+        /// This is very similar to CSS/JQuery selection.
+        /// Throws an exception if there is no game object that matches the selector.
+        /// </summary>
+        public GameObject ExpectOne(string selector)
+        {
+            Argument.StringNotNullOrEmpty(() => selector);
+
+            var foundGameObject = SelectOne(selector);
+            if (foundGameObject == null)
+            {
+                throw new ApplicationException("Game object with selector '" + selector + "' was not found.");
+            }
+            return foundGameObject;
+
+        }
+
+        /// <summary>
         /// Select object in the scene based on the specified selector.
         /// This is very similar to CSS/JQuery selection.
         /// </summary>
@@ -108,6 +140,24 @@ namespace RSG.Scene.Query
             Argument.StringNotNullOrEmpty(() => selector);
 
             return SelectAll(gameObject, selector).FirstOrDefault();
+        }
+
+        /// <summary>
+        /// Select the first child game object that matches the specified selector.
+        /// This is very similar to CSS/JQuery selection.
+        /// Throws an exception if there is no game object that matches the selector.
+        /// </summary>
+        public GameObject ExpectOne(GameObject gameObject, string selector)
+        {
+            Argument.NotNull(() => gameObject);
+            Argument.StringNotNullOrEmpty(() => selector);
+
+            var foundGameObject = SelectOne(gameObject, selector);
+            if (foundGameObject == null)
+            {
+                throw new ApplicationException("Child game object with selector '" + selector + "' was not found.");
+            }
+            return foundGameObject;
         }
 
         /// <summary>
