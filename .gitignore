@@ -10,3 +10,5 @@ Example Unity Project/Example Unity Project-csharp.sln
 Example Unity Project/Example Unity Project-csharp.userprefs
 Example Unity Project/Example Unity Project.userprefs
 Example Unity Project/Example Unity Project.sln
+*.nupkg
+*.suo
