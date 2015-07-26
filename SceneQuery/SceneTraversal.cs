@@ -82,8 +82,7 @@ namespace RSG.Scene.Query
         /// </summary>
         public IEnumerable<GameObject> RootNodes()
         {
-            var allGameObjects = UnityEngine.Object.FindObjectsOfType(typeof(GameObject)).Cast<GameObject>();
-
+            var allGameObjects = GameObject.FindObjectsOfType<GameObject>();
             foreach (var rootObject in allGameObjects)
             {
                 if (rootObject.transform.parent == null)
