@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FakeUnity.cs" />
+    <Compile Include="GameObjectExts.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Parser\QueryParser.cs" />
     <Compile Include="Parser\QueryTokenizer.cs" />

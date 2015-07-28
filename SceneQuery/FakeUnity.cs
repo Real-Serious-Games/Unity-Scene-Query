@@ -40,6 +40,10 @@ namespace RSG.Scene.Query
         public virtual GameObject gameObject { get; set; }
     }
 
+    public class Component
+    {
+    }
+
     public class GameObject
     {
         private Transform _transform;
@@ -64,6 +68,17 @@ namespace RSG.Scene.Query
         public virtual int GetInstanceID()
         {
             return 0;
+        }
+
+        public static T[] FindObjectsOfType<T>()
+        {
+            return new T[0];
+        }
+
+        public virtual ComponentT GetComponent<ComponentT>() 
+            where ComponentT : class
+        {
+            return null;
         }
     }
 }
