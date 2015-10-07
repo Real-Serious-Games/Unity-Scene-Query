@@ -14,6 +14,37 @@ namespace RSG.Scene.Query
         private static SceneTraversal sceneTraversal = new SceneTraversal();
         private static SceneQuery sceneQuery = new SceneQuery();
 
+        //
+        // Get the root object of the game object
+        //
+        public static GameObject RootObject(this GameObject gameObject)
+        {
+            if (gameObject.transform.parent == null)
+            {
+                //
+                // The object itself is the root GameObject.
+                return gameObject;
+            }
+
+            var rootTransform = gameObject.transform.parent;
+            while (rootTransform.parent != null)
+            {
+                rootTransform = rootTransform.parent;
+            }
+
+            return rootTransform.gameObject;
+        }
+
+        //
+        // Get the distinct collection of root objects for the input collection of GameObjects.
+        //
+        public static IEnumerable<GameObject> RootObjects(this IEnumerable<GameObject> gameObjects)
+        {
+            return gameObjects
+                .Select(go => go.RootObject())
+                .Distinct();
+        }
+
         /// <summary>
         /// Get the collection of children for a particular game object.
         /// </summary>
@@ -21,6 +52,15 @@ namespace RSG.Scene.Query
         {
             return sceneTraversal.Children(parent);
         }
+
+        /// <summary>
+        /// Get the collection of all child gameobjects for the input collection of game objects.
+        /// </summary>
+        public static IEnumerable<GameObject> Children(this IEnumerable<GameObject> source)
+        {
+            return source.SelectMany(go => go.Children());
+        }
+
 
         /// <summary>
         /// Get collection of all ancestors of a particular game object, starting with the immediate parent and working up to the root object.
@@ -36,6 +76,14 @@ namespace RSG.Scene.Query
         public static IEnumerable<GameObject> Descendents(this GameObject parent)
         {
             return sceneTraversal.Descendents(parent);
+        }
+
+        /// <summary>
+        /// Get collection of all descendents of the input collection of game objects.
+        /// </summary>
+        public static IEnumerable<GameObject> Descendents(this IEnumerable<GameObject> source)
+        {
+            return source.SelectMany(go => go.Descendents());
         }
 
         /// <summary>
