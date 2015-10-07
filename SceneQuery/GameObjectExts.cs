@@ -46,6 +46,20 @@ namespace RSG.Scene.Query
         }
 
         /// <summary>
+        /// Retreive the parent of a game object.
+        /// </summary>
+        public static GameObject Parent(this GameObject gameObject)
+        {
+            var transform = gameObject.transform;
+            if (transform.parent == null)
+            {
+                return null;
+            }
+
+            return transform.parent.gameObject;
+        }
+
+        /// <summary>
         /// Get the collection of children for a particular game object.
         /// </summary>
         public static IEnumerable<GameObject> Children(this GameObject parent)
