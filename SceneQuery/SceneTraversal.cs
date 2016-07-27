@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace RSG.Scene.Query
 {
@@ -82,14 +83,7 @@ namespace RSG.Scene.Query
         /// </summary>
         public IEnumerable<GameObject> RootNodes()
         {
-            var allGameObjects = GameObject.FindObjectsOfType<GameObject>();
-            foreach (var rootObject in allGameObjects)
-            {
-                if (rootObject.transform.parent == null)
-                {
-                    yield return rootObject;
-                }
-            }
+            return SceneManager.GetActiveScene().GetRootGameObjects();
         }
 
         /// <summary>
