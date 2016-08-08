@@ -1,5 +1,4 @@
-﻿using RSG.Utils;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,9 +16,6 @@ namespace RSG.Scene.Query
 
         public AndQuery(IQuery left, IQuery right)
         {
-            Argument.NotNull(() => left);
-            Argument.NotNull(() => right);
-
             this.left = left;
             this.right = right;
         }

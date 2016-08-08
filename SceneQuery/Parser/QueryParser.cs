@@ -1,5 +1,4 @@
-﻿using RSG.Utils;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -32,8 +31,6 @@ namespace RSG.Scene.Query.Parser
 
         public QueryParser(IQueryTokenizer tokenizer)
         {
-            Argument.NotNull(() => tokenizer);
-
             this.tokenizer = tokenizer;
         }
 
@@ -69,8 +66,6 @@ namespace RSG.Scene.Query.Parser
 
             public Matcher(string name, bool partial)
             {
-                Argument.StringNotNullOrEmpty(() => name);
-
                 this.Name = name;
                 this.Partial = partial;
             }
@@ -246,8 +241,6 @@ namespace RSG.Scene.Query.Parser
         /// </summary>
         public IQuery Parse(string queryStr)
         {
-            Argument.StringNotNullOrEmpty(() => queryStr);
-
             tokenizer.Start(queryStr);
             return query();
         }

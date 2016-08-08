@@ -1,5 +1,4 @@
 ﻿using Moq;
-using RSG.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,8 +29,6 @@ namespace RSG.Scene.Query.Parser.Tests
 
             public MockTokenizer(IEnumerable<MockToken> mockTokens)
             {
-                Argument.NotNull(() => mockTokens);
-
                 this.mockTokens = mockTokens;
                 this.mockTokensEnumerator = mockTokens.GetEnumerator();
                 AtEnd = !this.mockTokensEnumerator.MoveNext(); // Prime the first token.

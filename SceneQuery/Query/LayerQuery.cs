@@ -1,5 +1,4 @@
-﻿using RSG.Utils;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,8 +16,6 @@ namespace RSG.Scene.Query
 
         public LayerQuery(string layerName)
         {
-            Argument.StringNotNullOrEmpty(() => layerName);
-
             this.layerName = layerName.ToLower();
         }
 

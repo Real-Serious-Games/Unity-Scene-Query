@@ -1,5 +1,4 @@
-﻿using RSG.Utils;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,8 +20,6 @@ namespace RSG.Scene.Query
 
         public NotQuery(IQuery childQuery)
         {
-            Argument.NotNull(() => childQuery);
-
             this.ChildQuery = childQuery;
         }
 

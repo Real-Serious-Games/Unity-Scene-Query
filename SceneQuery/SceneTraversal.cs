@@ -83,7 +83,7 @@ namespace RSG.Scene.Query
         /// </summary>
         public IEnumerable<GameObject> RootNodes()
         {
-            return SceneManager.GetActiveScene().GetRootGameObjects();
+            return SceneManager.GetActiveScene().GetRootGameObjects().Cast<GameObject>();
         }
 
         /// <summary>

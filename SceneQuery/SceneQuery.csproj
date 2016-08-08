@@ -35,9 +35,6 @@
     <DefineConstants>TRACE;DEBUG;TESTING</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="RSG.Toolkit">
-      <HintPath>..\packages\RSG.Toolkit.1.0.0.0\lib\net35\RSG.Toolkit.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -51,6 +48,7 @@
   <ItemGroup>
     <Compile Include="FakeUnity.cs" />
     <Compile Include="GameObjectExts.cs" />
+    <Compile Include="LinqExts.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Parser\QueryParser.cs" />
     <Compile Include="Parser\QueryTokenizer.cs" />
@@ -67,9 +65,6 @@
     <Compile Include="Query\UniqueIdQuery.cs" />
     <Compile Include="SceneQuery.cs" />
     <Compile Include="SceneTraversal.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

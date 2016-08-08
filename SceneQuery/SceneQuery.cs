@@ -1,5 +1,4 @@
 ﻿using RSG.Scene.Query.Parser;
-using RSG.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -86,8 +85,6 @@ namespace RSG.Scene.Query
         /// </summary>
         public SceneQuery(ISceneTraversal sceneTraversal, IQueryParser queryParser)
         {
-            Argument.NotNull(() => sceneTraversal);
-
             this.sceneTraversal = sceneTraversal;
             this.queryParser = queryParser;
         }
@@ -98,8 +95,6 @@ namespace RSG.Scene.Query
         /// </summary>
         public GameObject SelectOne(string selector)
         {
-            Argument.StringNotNullOrEmpty(() => selector);
-
             return SelectAll(selector).FirstOrDefault();
         }
 
@@ -110,8 +105,6 @@ namespace RSG.Scene.Query
         /// </summary>
         public GameObject ExpectOne(string selector)
         {
-            Argument.StringNotNullOrEmpty(() => selector);
-
             var gameObjects = SelectAll(selector);
             if (!gameObjects.Any())
             {
@@ -132,8 +125,6 @@ namespace RSG.Scene.Query
         /// </summary>
         public IEnumerable<GameObject> SelectAll(string selector)
         {
-            Argument.StringNotNullOrEmpty(() => selector);
-
             try
             {
                 var query = queryParser.Parse(selector);
@@ -153,9 +144,6 @@ namespace RSG.Scene.Query
         /// </summary>
         public GameObject SelectOne(GameObject gameObject, string selector)
         {
-            Argument.NotNull(() => gameObject);
-            Argument.StringNotNullOrEmpty(() => selector);
-
             return SelectAll(gameObject, selector).FirstOrDefault();
         }
 
@@ -166,9 +154,6 @@ namespace RSG.Scene.Query
         /// </summary>
         public GameObject ExpectOne(GameObject parentGameObject, string selector)
         {
-            Argument.NotNull(() => parentGameObject);
-            Argument.StringNotNullOrEmpty(() => selector);
-
             var gameObjects = SelectAll(parentGameObject, selector);
             if (!gameObjects.Any())
             {
@@ -189,9 +174,6 @@ namespace RSG.Scene.Query
         /// </summary>
         public IEnumerable<GameObject> SelectAll(GameObject gameObject, string selector)
         {
-            Argument.NotNull(() => gameObject);
-            Argument.StringNotNullOrEmpty(() => selector);
-
             try
             {
                 var query = queryParser.Parse(selector);
@@ -211,8 +193,6 @@ namespace RSG.Scene.Query
         public ComponentT ExpectComponent<ComponentT>(string selector)
             where ComponentT : Component
         {
-            Argument.StringNotNullOrEmpty(() => selector);
-
             var gameObject = ExpectOne(selector);
 
             var component = gameObject.GetComponent<ComponentT>();
@@ -230,9 +210,6 @@ namespace RSG.Scene.Query
         public ComponentT ExpectComponent<ComponentT>(GameObject parentGameObject, string selector)
             where ComponentT : Component
         {
-            Argument.NotNull(() => parentGameObject);
-            Argument.StringNotNullOrEmpty(() => selector);
-
             var gameObject = ExpectOne(parentGameObject, selector);
 
             var component = gameObject.GetComponent<ComponentT>();

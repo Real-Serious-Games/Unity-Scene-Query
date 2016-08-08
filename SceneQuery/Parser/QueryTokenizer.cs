@@ -1,5 +1,4 @@
-﻿using RSG.Utils;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -83,8 +82,6 @@ namespace RSG.Scene.Query.Parser
         /// </summary>
         public void Start(string query)
         {
-            Argument.StringNotNullOrEmpty(() => query);
-
             this.query = query.Trim();
             this.position = 0;
 

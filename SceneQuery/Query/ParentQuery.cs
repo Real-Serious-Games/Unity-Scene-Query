@@ -1,5 +1,4 @@
-﻿using RSG.Utils;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,8 +18,6 @@ namespace RSG.Scene.Query
 
         public ParentQuery(IQuery query)
         {
-            Argument.NotNull(() => query);
-
             this.query = query;
         }
 
