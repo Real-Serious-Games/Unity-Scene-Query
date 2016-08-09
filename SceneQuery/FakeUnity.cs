@@ -42,6 +42,7 @@ namespace RSG.Scene.Query
 
     public class Component
     {
+        public GameObject gameObject { get; set; }
     }
 
     public class GameObject
@@ -79,6 +80,21 @@ namespace RSG.Scene.Query
             where ComponentT : class
         {
             return null;
+        }
+
+        internal static ComponentT FindObjectOfType<ComponentT>()
+        {
+            return (ComponentT)(object)null;            
+        }
+
+        internal IEnumerable<ComponentT> GetComponentsInChildren<ComponentT>() 
+        {
+            return new ComponentT[0];
+        }
+
+        internal ComponentT GetComponentInChildren<ComponentT>()
+        {
+            return (ComponentT)(object)null;
         }
     }
 }

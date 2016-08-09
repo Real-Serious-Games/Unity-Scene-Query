@@ -14,52 +14,114 @@ namespace RSG.Scene.Query
     {
         /// <summary>
         /// Select the first game object that matches the specified selector.
-        /// This is very similar to CSS/JQuery selection.
         /// </summary>
         GameObject SelectOne(string selector);
 
         /// <summary>
+        /// Select the first game object that has the specified component.
+        /// Returns null if none found.
+        /// </summary>
+        ComponentT SelectOne<ComponentT>()
+            where ComponentT : Component;
+
+        /// <summary>
+        /// Select the first game object that has the specified component and matches the specified selector.
+        /// Returns null if none found.
+        /// </summary>
+        ComponentT SelectOne<ComponentT>(string selector)
+            where ComponentT : Component;
+
+        /// <summary>
         /// Select the first game object that matches the specified selector.
-        /// This is very similar to CSS/JQuery selection.
         /// Throws an exception if there is no game object that matches the selector.
         /// </summary>
         GameObject ExpectOne(string selector);
 
         /// <summary>
+        /// Get the first game object that has the specified component.
+        /// Throws an exception if no such game object exists.
+        /// </summary>
+        ComponentT ExpectOne<ComponentT>()
+            where ComponentT : Component;
+
+        /// <summary>
+        /// Get the first game object that has the specified component and matches the specified selector.
+        /// Throws an exception if no such game object exists.
+        /// </summary>
+        ComponentT ExpectOne<ComponentT>(string selector)
+            where ComponentT : Component;
+
+        /// <summary>
         /// Select object in the scene based on the specified selector.
-        /// This is very similar to CSS/JQuery selection.
         /// </summary>
         IEnumerable<GameObject> SelectAll(string selector);
 
         /// <summary>
+        /// Select all game objects that have the specified component.
+        /// </summary>
+        IEnumerable<ComponentT> SelectAll<ComponentT>()
+            where ComponentT : Component;
+
+        /// <summary>
+        /// Select all game objects that have the specified component and match the specified selector.
+        /// </summary>
+        IEnumerable<ComponentT> SelectAll<ComponentT>(string selector)
+            where ComponentT : Component;
+
+        /// <summary>
         /// Select the first child game object that matches the specified selector.
-        /// This is very similar to CSS/JQuery selection.
         /// </summary>
         GameObject SelectOne(GameObject gameObject, string selector);
 
         /// <summary>
+        /// Select the first child game object that has the specified component.
+        /// Returns null if no such game object exists.
+        /// </summary>
+        ComponentT SelectOne<ComponentT>(GameObject gameObject)
+            where ComponentT : Component;
+
+        /// <summary>
+        /// Select the first child game object that has the specified component and matches the specified selector.
+        /// Returns null if no such game object exists.
+        /// </summary>
+        ComponentT SelectOne<ComponentT>(GameObject gameObject, string selector)
+            where ComponentT : Component;
+
+        /// <summary>
         /// Select the first child game object that matches the specified selector.
-        /// This is very similar to CSS/JQuery selection.
         /// Throws an exception if there is no game object that matches the selector.
         /// </summary>
         GameObject ExpectOne(GameObject gameObject, string selector);
 
         /// <summary>
+        /// Select the first child game object that has the specified component.
+        /// Throws an exception if no such game object esists.
+        /// </summary>
+        ComponentT ExpectOne<ComponentT>(GameObject gameObject)
+            where ComponentT : Component;
+
+        /// <summary>
+        /// Select the first child game object that has the specified component and matches the specified selector.
+        /// Throws an exception if no such game object esists.
+        /// </summary>
+        ComponentT ExpectOne<ComponentT>(GameObject gameObject, string selector)
+            where ComponentT : Component;
+
+        /// <summary>
         /// Select child objects in the scene based on the specified selector.
-        /// This is very similar to CSS/JQuery selection.
         /// </summary>
         IEnumerable<GameObject> SelectAll(GameObject gameObject, string selector);
 
         /// <summary>
-        /// Expect that a component should exist on the single game object that is identified by 'selector'.
+        /// Select child objects that have the specified component.
         /// </summary>
-        ComponentT ExpectComponent<ComponentT>(string selector)
+        IEnumerable<ComponentT> SelectAll<ComponentT>(GameObject gameObject)
             where ComponentT : Component;
 
         /// <summary>
-        /// Expect that a component should exist on the single game object that is identified by 'selector'.
+        /// Select child objects that have the specified component and match the specified selector
         /// </summary>
-        ComponentT ExpectComponent<ComponentT>(GameObject parentGameObject, string selector)
+        IEnumerable<ComponentT> SelectAll<ComponentT>(GameObject gameObject, string selector)
             where ComponentT : Component;
     }
 
@@ -99,6 +161,26 @@ namespace RSG.Scene.Query
         }
 
         /// <summary>
+        /// Select the first game object that has the specified component.
+        /// Returns null if none found.
+        /// </summary>
+        public ComponentT SelectOne<ComponentT>()
+            where ComponentT : Component
+        {
+            return GameObject.FindObjectOfType<ComponentT>();
+        }
+
+        /// <summary>
+        /// Select the first game object that has the specified component and matches the specified selector.
+        /// Returns null if none found.
+        /// </summary>
+        public ComponentT SelectOne<ComponentT>(string selector)
+            where ComponentT : Component
+        {
+            return SelectAll<ComponentT>(selector).FirstOrDefault();
+        }
+
+        /// <summary>
         /// Select the first game object that matches the specified selector.
         /// This is very similar to CSS/JQuery selection.
         /// Throws an exception if there is no game object that matches the selector.
@@ -119,23 +201,80 @@ namespace RSG.Scene.Query
             return gameObjects.First();
         }
 
+        /// Get the first game object that has the specified component.
+        /// Throws an exception if no such game object exists.
+        /// </summary>
+        public ComponentT ExpectOne<ComponentT>()
+            where ComponentT : Component
+        {
+            var components = SelectAll<ComponentT>();
+            if (!components.Any())
+            {
+                throw new ApplicationException("Game object with component '" + typeof(ComponentT).Name + "' was not found.");
+            }
+
+            if (components.Skip(1).Any())
+            {
+                throw new ApplicationException("Expected only a single game object to be identified by component '" + typeof(ComponentT).Name + "'.");
+            }
+
+            return components.First();
+        }
+
+        /// <summary>
+        /// Get the first game object that has the specified component and matches the specified selector.
+        /// Throws an exception if no such game object exists.
+        /// </summary>
+        public ComponentT ExpectOne<ComponentT>(string selector)
+            where ComponentT : Component
+        {
+            var components = SelectAll<ComponentT>(selector);
+            if (!components.Any())
+            {
+                throw new ApplicationException("Game object with component '" + typeof(ComponentT).Name + "' and selector '" + selector + "' was not found.");
+            }
+
+            if (components.Skip(1).Any())
+            {
+                throw new ApplicationException("Expected only a single game object to be identified by component '" + typeof(ComponentT).Name + "' and selector '" + selector + "'.");
+            }
+
+            return components.First();
+        }
+
         /// <summary>
         /// Select object in the scene based on the specified selector.
-        /// This is very similar to CSS/JQuery selection.
         /// </summary>
         public IEnumerable<GameObject> SelectAll(string selector)
         {
             try
             {
-                var query = queryParser.Parse(selector);
-                return sceneTraversal
-                    .PreOrderHierarchy()
-                    .Where(gameObject => query.Match(gameObject));
+                return Filter(sceneTraversal.PreOrderHierarchy(), selector);
             }
             catch (Exception ex)
             {
                 throw new ApplicationException("Exception was thrown while processing selector: " + selector + ", searching entire scene", ex);
             }
+        }
+
+        /// <summary>
+        /// Select all game objects that have the specified component.
+        /// </summary>
+        public IEnumerable<ComponentT> SelectAll<ComponentT>()
+            where ComponentT : Component
+        {
+            return GameObject.FindObjectsOfType<ComponentT>();
+        }
+
+        /// <summary>
+        /// Select all game objects that have the specified component and match the specified selector.
+        /// </summary>
+        public IEnumerable<ComponentT> SelectAll<ComponentT>(string selector)
+            where ComponentT : Component
+        {
+            var query = queryParser.Parse(selector);
+            return GameObject.FindObjectsOfType<ComponentT>()
+                .Where(component => query.Match(component.gameObject));
         }
 
         /// <summary>
@@ -145,6 +284,26 @@ namespace RSG.Scene.Query
         public GameObject SelectOne(GameObject gameObject, string selector)
         {
             return SelectAll(gameObject, selector).FirstOrDefault();
+        }
+
+        /// <summary>
+        /// Select the first child game object that has the specified component.
+        /// Returns null if no such game object exists.
+        /// </summary>
+        public ComponentT SelectOne<ComponentT>(GameObject gameObject)
+            where ComponentT : Component
+        {
+            return gameObject.GetComponentInChildren<ComponentT>();
+        }
+
+        /// <summary>
+        /// Select the first child game object that has the specified component and matches the specified selector.
+        /// Returns null if no such game object exists.
+        /// </summary>
+        public ComponentT SelectOne<ComponentT>(GameObject gameObject, string selector)
+            where ComponentT : Component
+        {
+            return SelectAll<ComponentT>(gameObject, selector).FirstOrDefault();
         }
 
         /// <summary>
@@ -169,6 +328,48 @@ namespace RSG.Scene.Query
         }
 
         /// <summary>
+        /// Select the first child game object that has the specified component.
+        /// Throws an exception if no such game object esists.
+        /// </summary>
+        public ComponentT ExpectOne<ComponentT>(GameObject gameObject)
+            where ComponentT : Component
+        {
+            var components = SelectAll<ComponentT>(gameObject);
+            if (!components.Any())
+            {
+                throw new ApplicationException("Game object with component '" + typeof(ComponentT).Name + "' was not found under '" + gameObject.name + "'.");
+            }
+
+            if (components.Skip(1).Any())
+            {
+                throw new ApplicationException("Expected only a single game object to be identified by component '" + typeof(ComponentT).Name + "' under '" + gameObject.name + "'.");
+            }
+
+            return components.First();
+        }
+
+        /// <summary>
+        /// Select the first child game object that has the specified component and matches the specified selector.
+        /// Throws an exception if no such game object esists.
+        /// </summary>
+        public ComponentT ExpectOne<ComponentT>(GameObject gameObject, string selector)
+            where ComponentT : Component
+        {
+            var components = SelectAll<ComponentT>(gameObject, selector);
+            if (!components.Any())
+            {
+                throw new ApplicationException("Game object with component '" + typeof(ComponentT).Name + "' and selector '" + selector + "' was not found under '" + gameObject.name + "'.");
+            }
+
+            if (components.Skip(1).Any())
+            {
+                throw new ApplicationException("Expected only a single game object to be identified by component '" + typeof(ComponentT).Name + "' and selector '" + selector + "' under '" + gameObject.name + "'.");
+            }
+
+            return components.First();
+        }
+
+        /// <summary>
         /// Select child objects in the scene based on the specified selector.
         /// This is very similar to CSS/JQuery selection.
         /// </summary>
@@ -176,10 +377,7 @@ namespace RSG.Scene.Query
         {
             try
             {
-                var query = queryParser.Parse(selector);
-                return sceneTraversal
-                    .PreOrderHierarchy(gameObject)
-                    .Where(childGameObject => query.Match(childGameObject));
+                return Filter(sceneTraversal.PreOrderHierarchy(gameObject), selector);
             }
             catch (Exception ex)
             {
@@ -188,37 +386,34 @@ namespace RSG.Scene.Query
         }
 
         /// <summary>
-        /// Expect that a component should exist on the single game object that is identified by 'selector'.
+        /// Select child objects that have the specified component.
         /// </summary>
-        public ComponentT ExpectComponent<ComponentT>(string selector)
+        public IEnumerable<ComponentT> SelectAll<ComponentT>(GameObject gameObject)
             where ComponentT : Component
         {
-            var gameObject = ExpectOne(selector);
-
-            var component = gameObject.GetComponent<ComponentT>();
-            if (component == null)
-            {
-                throw new ApplicationException("Game object " + gameObject.name + " doesnt have component " + typeof(ComponentT).Name + " attached!");
-            }
-
-            return component;
+            return gameObject.GetComponentsInChildren<ComponentT>();
         }
 
         /// <summary>
-        /// Expect that a component should exist on the single game object that is identified by 'selector'.
+        /// Select child objects that have the specified component and match the specified selector
         /// </summary>
-        public ComponentT ExpectComponent<ComponentT>(GameObject parentGameObject, string selector)
+        public IEnumerable<ComponentT> SelectAll<ComponentT>(GameObject gameObject, string selector)
             where ComponentT : Component
         {
-            var gameObject = ExpectOne(parentGameObject, selector);
+            var query = queryParser.Parse(selector);
+            return gameObject
+                .GetComponentsInChildren<ComponentT>()
+                .Where(component => query.Match(component.gameObject))
+                ;
+        }
 
-            var component = gameObject.GetComponent<ComponentT>();
-            if (component == null)
-            {
-                throw new ApplicationException("Game object " + gameObject.name + " doesnt have component " + typeof(ComponentT).Name + " attached!");
-            }
-
-            return component;
+        /// <summary>
+        /// Filter game objects by the specified selector.
+        /// </summary>
+        public IEnumerable<GameObject> Filter(IEnumerable<GameObject> gameObjects, string selector)
+        {
+            var query = queryParser.Parse(selector);
+            return gameObjects.Where(gameObject => query.Match(gameObject));
         }
     }
 }

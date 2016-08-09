@@ -193,11 +193,41 @@ namespace RSG.Scene.Query.Tests
             Assert.Throws<ApplicationException>(() => testObject.ExpectOne(mockParentGameObject.Object, selector));
         }
 
+        [Fact]
+        public void can_filter_collection_of_game_objects()
+        {
+            Init();
+
+            var selector = "some-selector";
+            var mockQuery = new Mock<IQuery>();
+            mockQueryParser
+                .Setup(m => m.Parse(selector))
+                .Returns(mockQuery.Object);
+
+            var mockGameObject1 = new Mock<GameObject>();
+            var mockGameObject2 = new Mock<GameObject>();
+            var mockGameObject3 = new Mock<GameObject>();
+            mockQuery
+                .Setup(m => m.Match(mockGameObject1.Object))
+                .Returns(false);
+            mockQuery
+                .Setup(m => m.Match(mockGameObject2.Object))
+                .Returns(true);
+            mockQuery
+                .Setup(m => m.Match(mockGameObject3.Object))
+                .Returns(false);
+
+            var output = testObject.Filter(LinqExts.FromItems(mockGameObject1.Object, mockGameObject2.Object, mockGameObject3.Object), selector).ToArray();
+            Assert.Equal(1, output.Length);
+            Assert.Equal(mockGameObject2.Object, output[0]);
+        }
+
         public class MyComponent : Component
         {
 
         }
 
+        /*fio:
         [Fact]
         public void expect_component_can_retrieve_component()
         {
@@ -252,5 +282,6 @@ namespace RSG.Scene.Query.Tests
 
             Assert.Throws<ApplicationException>(() => testObject.ExpectComponent<MyComponent>(selector));
         }
+        */
     }
 }

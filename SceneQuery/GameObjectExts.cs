@@ -134,7 +134,6 @@ namespace RSG.Scene.Query
 
         /// <summary>
         /// Select the first child game object that matches the specified selector.
-        /// This is very similar to CSS/JQuery selection.
         /// </summary>
         public static GameObject SelectOne(this GameObject parent, string selector)
         {
@@ -142,8 +141,26 @@ namespace RSG.Scene.Query
         }
 
         /// <summary>
-        /// Select the first child game object that matches the specified selector.
+        /// Select the first child game object with the specifed component.
+        /// </summary>
+        public static ComponentT SelectOne<ComponentT>(this GameObject parent)
+            where ComponentT : Component
+        {
+            return sceneQuery.SelectOne<ComponentT>(parent);
+        }
+
+        /// <summary>
+        /// Select the first child game object with the specifed component that matches the specified selector.
         /// This is very similar to CSS/JQuery selection.
+        /// </summary>
+        public static ComponentT SelectOne<ComponentT>(this GameObject parent, string selector)
+            where ComponentT : Component
+        {
+            return sceneQuery.SelectOne<ComponentT>(parent, selector);
+        }
+
+        /// <summary>
+        /// Select the first child game object that matches the specified selector.
         /// Throws an exception if there is no game object that matches the selector.
         /// </summary>
         public static GameObject ExpectOne(this GameObject parent, string selector)
@@ -152,8 +169,27 @@ namespace RSG.Scene.Query
         }
 
         /// <summary>
+        /// Select the first child game object that has the specified component.
+        /// Throws an exception if there is no game object that matches the selector.
+        /// </summary>
+        public static ComponentT ExpectOne<ComponentT>(this GameObject parent)
+            where ComponentT : Component
+        {
+            return sceneQuery.ExpectOne<ComponentT>(parent);
+        }
+
+        /// <summary>
+        /// Select the first child game object that has the specified component and matches the specified selector.
+        /// Throws an exception if there is no game object that matches the selector.
+        /// </summary>
+        public static ComponentT ExpectOne<ComponentT>(this GameObject parent, string selector)
+            where ComponentT : Component
+        {
+            return sceneQuery.ExpectOne<ComponentT>(parent, selector);
+        }
+
+        /// <summary>
         /// Select child objects in the scene based on the specified selector.
-        /// This is very similar to CSS/JQuery selection.
         /// </summary>
         public static IEnumerable<GameObject> SelectAll(this GameObject parent, string selector)
         {
@@ -161,12 +197,21 @@ namespace RSG.Scene.Query
         }
 
         /// <summary>
-        /// Expect that a component should exist on the single game object that is identified by 'selector'.
+        /// Select child objects that have the specified component.
         /// </summary>
-        public static ComponentT ExpectComponent<ComponentT>(this GameObject parent, string selector)
+        public static IEnumerable<ComponentT> SelectAll<ComponentT>(this GameObject parent)
             where ComponentT : Component
         {
-            return sceneQuery.ExpectComponent<ComponentT>(parent, selector);
+            return sceneQuery.SelectAll<ComponentT>(parent);
+        }
+
+        /// <summary>
+        /// Select child objects that have the specified component and matches the specified selector.
+        /// </summary>
+        public static IEnumerable<ComponentT> SelectAll<ComponentT>(this GameObject parent, string selector)
+            where ComponentT : Component
+        {
+            return sceneQuery.SelectAll<ComponentT>(parent, selector);
         }
     }
 }
