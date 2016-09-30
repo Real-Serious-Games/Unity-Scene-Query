@@ -7,7 +7,13 @@ A query language is used to identify game objects, it looks something similar to
 For in depth coverage please read the article on 
 [What Could Possibly Go Wrong](http://www.what-could-possibly-go-wrong.com/scene-query-recipes-for-unity/?utm_source=ash&utm_medium=unity-scene-query-github&utm_campaign=scene-query).
 
+## Examples
 
+This repo contains some examples.
+
+More examples of scene traversal: [https://github.com/Real-Serious-Games/Unity-Scene-Traversal-Examples](https://github.com/Real-Serious-Games/Unity-Scene-Traversal-Examples).
+
+More examples of scene query: [https://github.com/Real-Serious-Games/Unity-Scene-Query-Examples](https://github.com/Real-Serious-Games/Unity-Scene-Query-Examples). 
 
 ## Setup in Unity
 
