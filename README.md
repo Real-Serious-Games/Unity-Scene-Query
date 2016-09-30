@@ -4,6 +4,10 @@ A library to traverse and query the [Unity](http://en.wikipedia.org/wiki/Unity_(
 
 A query language is used to identify game objects, it looks something similar to [CSS selectors](http://en.wikipedia.org/wiki/Cascading_Style_Sheets#Selector).
 
+For in depth coverage please read the article on 
+[What Could Possibly Go Wrong](http://www.what-could-possibly-go-wrong.com/scene-query-recipes-for-unity/?utm_source=ash&utm_medium=unity-scene-query-github&utm_campaign=scene-query).
+
+
 
 ## Setup in Unity
 
