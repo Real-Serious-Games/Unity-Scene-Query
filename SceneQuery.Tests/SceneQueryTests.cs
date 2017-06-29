@@ -47,7 +47,7 @@ namespace RSG.Scene.Query.Tests
 
             mockSceneTraversal
                 .Setup(m => m.PreOrderHierarchy())
-                .Returns(LinqExts.FromItems(mockGameObject1.Object, mockGameObject2.Object));
+                .Returns(FromItems(mockGameObject1.Object, mockGameObject2.Object));
 
             var testOutput = new GameObject[] { mockGameObject2.Object };
             Assert.Equal(testOutput, testObject.SelectAll(selector));
@@ -94,7 +94,7 @@ namespace RSG.Scene.Query.Tests
 
             mockSceneTraversal
                 .Setup(m => m.PreOrderHierarchy())
-                .Returns(LinqExts.FromItems(mockGameObject1.Object, mockGameObject2.Object));
+                .Returns(FromItems(mockGameObject1.Object, mockGameObject2.Object));
 
             Assert.Equal(mockGameObject1.Object, testObject.SelectOne(selector));
         }
@@ -112,7 +112,7 @@ namespace RSG.Scene.Query.Tests
 
             mockSceneTraversal
                 .Setup(m => m.PreOrderHierarchy())
-                .Returns(LinqExts.Empty<GameObject>());
+                .Returns(Enumerable.Empty<GameObject>());
 
             Assert.Throws<ApplicationException>(() => testObject.ExpectOne(selector));
         }
@@ -132,7 +132,7 @@ namespace RSG.Scene.Query.Tests
 
             mockSceneTraversal
                 .Setup(m => m.PreOrderHierarchy(mockParentGameObject.Object))
-                .Returns(LinqExts.Empty<GameObject>());
+                .Returns(Enumerable.Empty<GameObject>());
 
             Assert.Throws<ApplicationException>(() => testObject.ExpectOne(mockParentGameObject.Object, selector));
         }
@@ -159,7 +159,7 @@ namespace RSG.Scene.Query.Tests
 
             mockSceneTraversal
                 .Setup(m => m.PreOrderHierarchy())
-                .Returns(LinqExts.FromItems(mockGameObject1.Object, mockGameObject2.Object));
+                .Returns(FromItems(mockGameObject1.Object, mockGameObject2.Object));
 
             Assert.Throws<ApplicationException>(() => testObject.ExpectOne(selector));
         }
@@ -188,7 +188,7 @@ namespace RSG.Scene.Query.Tests
 
             mockSceneTraversal
                 .Setup(m => m.PreOrderHierarchy(mockParentGameObject.Object))
-                .Returns(LinqExts.FromItems(mockGameObject1.Object, mockGameObject2.Object));
+                .Returns(FromItems(mockGameObject1.Object, mockGameObject2.Object));
 
             Assert.Throws<ApplicationException>(() => testObject.ExpectOne(mockParentGameObject.Object, selector));
         }
@@ -217,9 +217,20 @@ namespace RSG.Scene.Query.Tests
                 .Setup(m => m.Match(mockGameObject3.Object))
                 .Returns(false);
 
-            var output = testObject.Filter(LinqExts.FromItems(mockGameObject1.Object, mockGameObject2.Object, mockGameObject3.Object), selector).ToArray();
+            var output = testObject.Filter(FromItems(mockGameObject1.Object, mockGameObject2.Object, mockGameObject3.Object), selector).ToArray();
             Assert.Equal(1, output.Length);
             Assert.Equal(mockGameObject2.Object, output[0]);
+        }
+
+        /// <summary>
+        /// Convert a variable length argument list of items to an enumerable.
+        /// </summary>
+        internal static IEnumerable<T> FromItems<T>(params T[] items)
+        {
+            foreach (var item in items)
+            {
+                yield return item;
+            }
         }
 
         public class MyComponent : Component
