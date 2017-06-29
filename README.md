@@ -1,4 +1,5 @@
-# Unity Scene Query
+# Unity Scene Query 
+[![NuGet](https://img.shields.io/nuget/dt/RSG.SceneQuery.svg)](https://www.nuget.org/packages/RSG.SceneQuery/)
 
 A library to traverse and query the [Unity](http://en.wikipedia.org/wiki/Unity_(game_engine)) scene to find particular game objects.
 
